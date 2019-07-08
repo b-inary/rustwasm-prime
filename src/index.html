@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Fast prime number checker that works completely inside a browser. Supports arbitrary large numbers as long as time allows.">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Online Prime Number Checker</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+  </head>
+  <body>
+    <nav>
+      <a href="" class="brand">Online Prime Checker</a>
+      <input id="bmenub" type="checkbox" class="show">
+      <label for="bmenub" class="burger pseudo button"></label>
+      <div class="menu">
+        <label for="help-modal" class="pseudo button icon-help">Help</label>
+        <a href="https://github.com/b-inary/rustwasm-prime" class="pseudo button icon-github">GitHub</a>
+      </div>
+    </nav>
+    <div class="modal">
+      <input id="help-modal" type="checkbox" />
+      <label for="help-modal" class="overlay"></label>
+      <article>
+        <header>
+          <h3>Help</h3>
+          <label for="help-modal" class="close">&times;</label>
+        </header>
+        <footer>
+          <h3>Available Operators</h3>
+          <ul>
+            <li>+: addition / unary plus</li>
+            <li>-: subtraction / unary minus</li>
+            <li>*: multiplication</li>
+            <li>/: division (truncated)</li>
+            <li>%: modulo</li>
+            <li>**: exponentiation</li>
+            <li>!: factorial</li>
+          </ul>
+          <h3>Testing Method</h3>
+          <p>
+            <a href="https://en.wikipedia.org/wiki/Baillie%E2%80%93PSW_primality_test">Baillie-PSW primality test</a> is used.
+            More specifically, it performs the following tests:
+            <ol>
+              <li>Perform trial division up to p &lt; 1000 and confirm the input number is not a square.</li>
+              <li>Perform a <a href="https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test">Miller-Rabin test</a> (strong probable prime test) with base 2.</li>
+              <li>Perform an <a href="https://en.wikipedia.org/wiki/Lucas_pseudoprime">extra strong Lucas-Selfridge test</a>.</li>
+            </ol>
+            So far, there are no known composite numbers that pass the test.<br>
+            In particular, it returns a correct answer for all numbers less than 2**64 (<a href="http://ntheory.org/pseudoprimes.html">source</a>).
+          </p>
+          <h3>Implementation</h3>
+          <p>
+            Computation is performed completely inside a browser. It does not require any communication with servers.<br>
+            The core part is written in <a href="https://www.rust-lang.org/">Rust</a> and compiled into <a href="https://webassembly.org/">WebAssembly</a>.
+            See <a href="https://github.com/b-inary/rustwasm-prime">GitHub repository</a> for detail.
+          </p>
+          <h3>Supported Browsers</h3>
+          <p>
+            Latest versions of Chrome, Firefox, Safari, Edge
+          </p>
+        </footer>
+      </article>
+    </div>
+    <div class="wrapper">
+      <p>
+        <textarea id="input" placeholder="input a number or expression"></textarea>
+      </p>
+      <p class="large">
+        <button id="start-button">Submit</button>
+        <button id="cancel-button" class="warning hidden">Cancel</button>
+      </p>
+      <p class="large">
+        <span id="spinner" class="spinner hidden"></span>
+        <span id="result">Result: -</span>
+      </p>
+    </div>
+  </body>
+</html>

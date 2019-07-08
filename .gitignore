@@ -1,0 +1,6 @@
+/dist/
+/node_modules/
+/target/
+/wasm-pkg/
+/Cargo.lock
+/package-lock.json
